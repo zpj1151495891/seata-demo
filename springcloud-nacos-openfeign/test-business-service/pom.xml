@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>springcloud-nacos-openfeign-example</artifactId>
+        <groupId>com.example</groupId>
+        <version>1.0</version>
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>test-business-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>test-business-service</name>
+    <description>test-business-service</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>test-common-service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.trueland.tcloud.scrm</groupId>
+            <artifactId>scrm-common-exception</artifactId>
+            <version>CM1.5.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+</project>
