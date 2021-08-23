@@ -1,9 +1,9 @@
 package com.example.testaccountservice.controller;
 
+import com.alibaba.nacos.common.model.RestResult;
 import com.example.testaccountservice.service.TAccountService;
 import com.example.testcommonservice.dto.AccountDTO;
 import lombok.extern.slf4j.Slf4j;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +27,7 @@ public class TAccountController {
     private TAccountService accountService;
 
     @PostMapping("/dec_account")
-    Rsp decreaseAccount(@RequestBody AccountDTO accountDTO) {
+    RestResult decreaseAccount(@RequestBody AccountDTO accountDTO) {
         log.info("请求账户微服务：{}", accountDTO.toString());
         return accountService.decreaseAccount(accountDTO);
     }

@@ -1,5 +1,7 @@
 package com.example.testbusinessservice.service;
 
+import com.alibaba.nacos.common.model.RestResult;
+import com.alibaba.nacos.common.model.RestResultUtils;
 import com.example.testcommonservice.dto.BusinessDTO;
 import com.example.testcommonservice.dto.CommodityDTO;
 import com.example.testcommonservice.dto.OrderDTO;
@@ -8,9 +10,6 @@ import com.example.testcommonservice.feign.StorageFeignService;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
-import net.trueland.tcloud.scrm.common.exception.BuException;
-import net.trueland.tcloud.scrm.common.exception.model.SysResultCode;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,26 +37,26 @@ public class BusinessServiceImpl implements BusinessService{
      */
     @GlobalTransactional(timeoutMills = 300000, name = "dubbo-gts-seata-example")
     @Override
-    public Rsp handleBusiness(BusinessDTO businessDTO) {
+    public RestResult handleBusiness(BusinessDTO businessDTO) {
         log.info("开始全局事务，XID = " + RootContext.getXID());
         //1、扣减库存
         CommodityDTO commodityDTO = new CommodityDTO();
         commodityDTO.setCommodityCode(businessDTO.getCommodityCode());
         commodityDTO.setCount(businessDTO.getCount());
-        Rsp storageResponse = storageFeignService.decreaseStorage(commodityDTO);
+        RestResult storageResponse = storageFeignService.decreaseStorage(commodityDTO);
         //2、创建订单
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setUserId(businessDTO.getUserId());
         orderDTO.setCommodityCode(businessDTO.getCommodityCode());
         orderDTO.setOrderCount(businessDTO.getCount());
         orderDTO.setOrderAmount(businessDTO.getAmount());
-        Rsp<OrderDTO> response = orderFeignService.createOrder(orderDTO);
+        RestResult<OrderDTO> response = orderFeignService.createOrder(orderDTO);
 
-        if (!storageResponse.successful() || !response.successful()) {
-            throw new BuException(SysResultCode.OPERATION_FAIL);
+        if (!storageResponse.ok() || !response.ok()) {
+            throw new RuntimeException("扣减库存或生成订单失败");
         }
 
-        return Rsp.success(response.getData());
+        return RestResultUtils.success(response.getData());
 
     }
 
@@ -69,30 +68,30 @@ public class BusinessServiceImpl implements BusinessService{
      */
     @GlobalTransactional(timeoutMills = 300000, name = "dubbo-gts-seata-example")
     @Override
-    public Rsp handleBusiness2(BusinessDTO businessDTO) {
+    public RestResult handleBusiness2(BusinessDTO businessDTO) {
         log.info("开始全局事务，XID = " + RootContext.getXID());
         //1、扣减库存
         CommodityDTO commodityDTO = new CommodityDTO();
         commodityDTO.setCommodityCode(businessDTO.getCommodityCode());
         commodityDTO.setCount(businessDTO.getCount());
-        Rsp storageResponse = storageFeignService.decreaseStorage(commodityDTO);
+        RestResult storageResponse = storageFeignService.decreaseStorage(commodityDTO);
         //2、创建订单
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setUserId(businessDTO.getUserId());
         orderDTO.setCommodityCode(businessDTO.getCommodityCode());
         orderDTO.setOrderCount(businessDTO.getCount());
         orderDTO.setOrderAmount(businessDTO.getAmount());
-        Rsp<OrderDTO> response = orderFeignService.createOrder(orderDTO);
+        RestResult<OrderDTO> response = orderFeignService.createOrder(orderDTO);
 
 //        打开注释测试事务发生异常后，全局回滚功能
         if (!flag) {
             throw new RuntimeException("测试抛异常后，分布式事务回滚！");
         }
 
-        if (!storageResponse.successful() || !response.successful()) {
-            throw new BuException(SysResultCode.OPERATION_FAIL);
+        if (!storageResponse.ok() || !response.ok()) {
+            throw new RuntimeException("扣减库存或生成订单失败");
         }
 
-        return Rsp.success(response.getData());
+        return RestResultUtils.success(response.getData());
     }
 }

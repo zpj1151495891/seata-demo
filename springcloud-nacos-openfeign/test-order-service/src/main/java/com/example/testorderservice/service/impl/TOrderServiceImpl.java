@@ -1,5 +1,7 @@
 package com.example.testorderservice.service.impl;
 
+import com.alibaba.nacos.common.model.RestResult;
+import com.alibaba.nacos.common.model.RestResultUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.testcommonservice.dto.AccountDTO;
 import com.example.testcommonservice.dto.OrderDTO;
@@ -9,8 +11,6 @@ import com.example.testorderservice.service.TOrderService;
 import com.example.testorderservice.mapper.TOrderMapper;
 import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
-import net.trueland.tcloud.scrm.common.exception.model.SysResultCode;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,14 +29,14 @@ public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder>
     private AccountFeignService accountFeignService;
 
     @Override
-    public Rsp<OrderDTO> createOrder(OrderDTO orderDTO) {
+    public RestResult<OrderDTO> createOrder(OrderDTO orderDTO) {
         log.info("全局事务id:{}", RootContext.getXID());
 
         //扣减用户账户
         AccountDTO accountDTO = new AccountDTO();
         accountDTO.setUserId(orderDTO.getUserId());
         accountDTO.setAmount(orderDTO.getOrderAmount());
-        Rsp objectResponse = accountFeignService.decreaseAccount(accountDTO);
+        RestResult objectResponse = accountFeignService.decreaseAccount(accountDTO);
 
         //生成订单号
         orderDTO.setOrderNo(UUID.randomUUID().toString().replace("-", ""));
@@ -48,13 +48,13 @@ public class TOrderServiceImpl extends ServiceImpl<TOrderMapper, TOrder>
         try {
             baseMapper.createOrder(tOrder);
         } catch (Exception e) {
-            return Rsp.fail(SysResultCode.OPERATION_FAIL);
+            return RestResultUtils.failed(e.getMessage());
         }
 
-        if (!objectResponse.successful()) {
-            return Rsp.fail(SysResultCode.OPERATION_FAIL);
+        if (!objectResponse.ok()) {
+            return RestResultUtils.failed("扣款失败");
         }
 
-        return Rsp.success();
+        return RestResultUtils.success();
     }
 }

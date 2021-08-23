@@ -1,7 +1,7 @@
 package com.example.testcommonservice.feign;
 
+import com.alibaba.nacos.common.model.RestResult;
 import com.example.testcommonservice.dto.OrderDTO;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,5 +18,5 @@ public interface OrderFeignService {
      * 创建订单
      */
     @PostMapping(value = "create_order", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    Rsp<OrderDTO> createOrder(OrderDTO orderDTO);
+    RestResult<OrderDTO> createOrder(OrderDTO orderDTO);
 }

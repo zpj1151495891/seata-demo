@@ -1,7 +1,8 @@
 package com.example.testbusinessservice.config;
 
+import com.alibaba.nacos.common.model.RestResult;
+import com.alibaba.nacos.common.model.RestResultUtils;
 import lombok.extern.slf4j.Slf4j;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ControllerAdvice{
 
     @ExceptionHandler(Exception.class)
-    public Rsp<?> handleNullPointerException(Exception e) {
-        return Rsp.fail(e.getMessage());
+    public RestResult<?> handleNullPointerException(Exception e) {
+        return RestResultUtils.failed(e.getMessage());
     }
 }

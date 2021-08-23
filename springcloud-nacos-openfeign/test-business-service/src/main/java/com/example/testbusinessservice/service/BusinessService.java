@@ -1,9 +1,8 @@
 package com.example.testbusinessservice.service;
 
 
+import com.alibaba.nacos.common.model.RestResult;
 import com.example.testcommonservice.dto.BusinessDTO;
-import net.trueland.tcloud.scrm.common.model.Rsp;
-
 /**
  * @Author: lidong
  * @Description
@@ -16,7 +15,7 @@ public interface BusinessService {
       * @param businessDTO
      * @return
      */
-    Rsp handleBusiness(BusinessDTO businessDTO);
+    RestResult handleBusiness(BusinessDTO businessDTO);
 
 
     /**
@@ -24,5 +23,5 @@ public interface BusinessService {
      * @param businessDTO
      * @return
      */
-    Rsp handleBusiness2(BusinessDTO businessDTO);
+    RestResult handleBusiness2(BusinessDTO businessDTO);
 }

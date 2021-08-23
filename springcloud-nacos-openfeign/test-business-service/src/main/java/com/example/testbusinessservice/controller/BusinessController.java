@@ -1,9 +1,9 @@
 package com.example.testbusinessservice.controller;
 
+import com.alibaba.nacos.common.model.RestResult;
 import com.example.testbusinessservice.service.BusinessService;
 import com.example.testcommonservice.dto.BusinessDTO;
 import lombok.extern.slf4j.Slf4j;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +30,7 @@ public class BusinessController {
      * @Return:
      */
     @PostMapping("/buy")
-    Rsp handleBusiness(@RequestBody BusinessDTO businessDTO){
+    RestResult handleBusiness(@RequestBody BusinessDTO businessDTO){
         log.info("请求参数：{}",businessDTO.toString());
         return businessService.handleBusiness(businessDTO);
     }
@@ -41,7 +41,7 @@ public class BusinessController {
      * @Return:
      */
     @PostMapping("/buy2")
-    Rsp handleBusiness2(@RequestBody BusinessDTO businessDTO){
+    RestResult handleBusiness2(@RequestBody BusinessDTO businessDTO){
         log.info("请求参数：{}",businessDTO.toString());
         return businessService.handleBusiness2(businessDTO);
     }

@@ -1,15 +1,16 @@
 package com.example.testaccountservice.service;
 
+import com.alibaba.nacos.common.model.RestResult;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.testaccountservice.dao.TAccount;
 import com.example.testcommonservice.dto.AccountDTO;
-import net.trueland.tcloud.scrm.common.model.Rsp;
+import feign.Response;
 
 /**
 *
 */
 public interface TAccountService extends IService<TAccount> {
 
-    Rsp decreaseAccount(AccountDTO accountDTO);
+    RestResult decreaseAccount(AccountDTO accountDTO);
 
 }

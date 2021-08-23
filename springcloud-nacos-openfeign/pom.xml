@@ -206,33 +206,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!--        <dependency>-->
-        <!--            <groupId>net.trueland.tcloud.scrm</groupId>-->
-        <!--            <artifactId>scrm-common-all</artifactId>-->
-        <!--            <version>CM1.5.0</version>-->
-        <!--            <exclusions>-->
-        <!--                <exclusion>-->
-        <!--                    <artifactId>hutool-all</artifactId>-->
-        <!--                    <groupId>cn.hutool</groupId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <artifactId>swagger-annotations</artifactId>-->
-        <!--                    <groupId>io.swagger</groupId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <artifactId>mybatis</artifactId>-->
-        <!--                    <groupId>org.mybatis</groupId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <artifactId>mybatis-spring</artifactId>-->
-        <!--                    <groupId>org.mybatis</groupId>-->
-        <!--                </exclusion>-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.hibernate.validator</groupId>-->
-        <!--                    <artifactId>hibernate-validator</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
 
         <!-- nacos服务注册与发现 -->
         <dependency>

@@ -1,7 +1,7 @@
 package com.example.testcommonservice.feign;
 
+import com.alibaba.nacos.common.model.RestResult;
 import com.example.testcommonservice.dto.AccountDTO;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,5 +18,5 @@ public interface AccountFeignService {
      * 从账户扣钱
      */
     @PostMapping(value = "dec_account", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    Rsp decreaseAccount(AccountDTO accountDTO);
+    RestResult decreaseAccount(AccountDTO accountDTO);
 }

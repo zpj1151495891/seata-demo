@@ -1,9 +1,9 @@
 package com.example.teststorageservice.controller;
 
+import com.alibaba.nacos.common.model.RestResult;
 import com.example.testcommonservice.dto.CommodityDTO;
 import com.example.teststorageservice.service.TStorageService;
 import lombok.extern.slf4j.Slf4j;
-import net.trueland.tcloud.scrm.common.model.Rsp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +31,7 @@ public class TStorageController {
      * 扣减库存
      */
     @PostMapping("dec_storage")
-    Rsp decreaseStorage(@RequestBody CommodityDTO commodityDTO){
+    RestResult decreaseStorage(@RequestBody CommodityDTO commodityDTO){
         log.info("请求库存微服务：{}",commodityDTO.toString());
         return storageService.decreaseStorage(commodityDTO);
     }
