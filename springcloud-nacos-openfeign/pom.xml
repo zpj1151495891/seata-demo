@@ -25,7 +25,7 @@
         <scrm.version>1.0-SNAPSHOT</scrm.version>
         <nacos.version>1.4.2</nacos.version>
 
-        <seata.version>1.3.0</seata.version>
+        <seata.version>1.4.2</seata.version>
 
         <mysql-connector.version>8.0.23</mysql-connector.version>
         <mybatisplus.version>3.4.2</mybatisplus.version>

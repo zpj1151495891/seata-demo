@@ -232,5 +232,11 @@ seata 连接信息, 需注意  tx-service-group: cloud-openfeign-seata-group和 
 ### 注意
 FeignInterceptor 拦截器必须，用于调用过程传递全局事务id，全局事务才会生效
 
+### 异常
+1. seata-all 1.5.x 的版本中 AbstractDMLBaseExecutor.executeAutoCommitFalse() 方法加了 updateCount >0 的判断, 
+<br>而mysql驱动包 executeBatch方法 会返回 NO_INFO = -2, 此时updateCount = -1, 批量插入更新的sql 无法生成undo_log, 最终无法回滚
+2. 将seata-all 退回1.4.2 , 在mysql8.0 的驱动中, datetime 会处理为 LocalDateTime ,此时undo_log 会报序列化异常<br>
+解决方法: java.resources.META-INF.services 路径下加 io.seata.rm.datasource.undo.parser.spi.JacksonSerializer文件, 内容: 添加的序列化器全路径 <br>
+方案参照 test-business-service 下
 
 
